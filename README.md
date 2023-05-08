@@ -8,3 +8,8 @@ OpenAI Gym [Toy_text] environment and comparative analysis the two in terms of:
       algorithm results in more average reward.</li>
 </ul>
 </p>
+
+Prerequisites
+-------------
+- `Python > 3.8.0` (code has been tested with this version)
+- Install necessary packages using `pip install -r requirements.txt`
