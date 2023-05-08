@@ -1,68 +1,106 @@
 import numpy as np
 import gym
 import random
-
-env = gym.make("Taxi-v2")
-env.render()
+import copy
 
 
-action_size = env.action_space.n
-print("Action size ", action_size)
+def main():
+    # create Taxi environment
+    env_train = gym.make("Taxi-v3")
 
-state_size = env.observation_space.n
-print("State size ", state_size)
-
-
-
-qtable = np.zeros((state_size, action_size))
-print(qtable)
-
-
-total_episodes = 50000        # Total episodes
-total_test_episodes = 100     # Total test episodes
-max_steps = 99                # Max steps per episode
-
-learning_rate = 0.7           # Learning rate
-gamma = 0.618                 # Discounting rate
-
-# Exploration parameters
-epsilon = 1.0                 # Exploration rate
-max_epsilon = 1.0             # Exploration probability at start
-min_epsilon = 0.01            # Minimum exploration probability 
-decay_rate = 0.01             # Exponential decay rate for exploration prob
-
-for episode in range(total_episodes):
-    # Reset the environment
-    state = env.reset()
-    step = 0
-    done = False
+    # initialize q-table
+    state_size = env_train.observation_space.n
+    action_size = env_train.action_space.n
+    qtable = np.zeros((state_size, action_size))
     
-    for step in range(max_steps):
-        # 3. Choose an action a in the current world state (s)
-        ## First we randomize a number
-        exp_exp_tradeoff = random.uniform(0,1)
-        
-        ## If this number > greater than epsilon --> exploitation (taking the biggest Q value for this state)
-        if exp_exp_tradeoff > epsilon:
-            action = np.argmax(qtable[state,:])
-        
-        # Else doing a random choice --> exploration
-        else:
-            action = env.action_space.sample()
-        
-        # Take the action (a) and observe the outcome state(s') and reward (r)
-        new_state, reward, done, info = env.step(action)
+    # hyperparameters
+    learning_rate = 0.9
+    discount_rate = 0.8
+    epsilon = 1.0
+    decay_rate = 0.005
 
-        # Update Q(s,a):= Q(s,a) + lr [R(s,a) + gamma * max Q(s',a') - Q(s,a)]
-        qtable[state, action] = qtable[state, action] + learning_rate * (reward + gamma * 
-                                    np.max(qtable[new_state, :]) - qtable[state, action])
+    # training variables
+    num_episodes = 1000
+    max_steps = 99  # per episode
+    episode = 1
+    
+    convergence_threshold_count = 0
+    
+    # training
+    while(True):
+        # reset the environment
+        state, _ = env_train.reset()
+        done = False
+        q = copy.deepcopy(qtable)
+        for s in range(max_steps):  
+            # exploration-exploitation tradeoff
+            if random.uniform(0, 1) < epsilon:
+                # explore
+                action = env_train.action_space.sample()
+            else:
+                # exploit
+                action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
+
+            # take action and observe reward
+            new_state, reward, done, info, _ = env_train.step(action)
+            
+
                 
-        # Our new state is state
-        state = new_state
+            # Q-learning algorithm
+            qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * np.max(qtable[new_state,:])-qtable[state,action])
+            
+                      
+            
+            # Update to our new state
+            state = new_state
+
+            # if done, finish episode
+            if done==True:
+                break
         
-        # If done : finish episode
-        if done == True: 
+        if np.array_equal(qtable,q):
+            convergence_threshold_count+=1  
+        else:
+            convergence_threshold_count=0        
+        
+        if convergence_threshold_count > 3:
             break
+        
+        # Decrease epsilon
+        epsilon = np.exp(-decay_rate * episode)
+        episode+=1
+
+    print(f"Training completed over {episode} episodes")
+    input("Press Enter to watch trained agent...")
+
+    env_train.close()
+
+    ###################################################
+
+    env_test = gym.make("Taxi-v3",render_mode='human')
     
-    # Reduce epsilon (because we need less and less exploration)
-    epsilon = min_epsilon + (max_epsilon - min_epsilon)*np.exp(-decay_rate*episode) 
+    for i in range(10):
+        state, _ = env_test.reset()
+        done = False
+        rewards = 0
+        print("Demo # ",i+1)
+        for s in range(max_steps):
+            print(f"TRAINED AGENT")
+            print("Step {}".format(s + 1))
+
+            action = np.argmax(qtable[state, :])
+            new_state, reward, done, info, _ = env_test.step(action)
+            rewards += reward
+            
+            env_test.render()
+            print(f"score: {rewards}")
+            state = new_state
+
+            if done == True:
+                break
+        print("#################")   
+        
+    env_test.close()
+
+if __name__ == "__main__":
+    main()
