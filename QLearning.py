@@ -66,3 +66,32 @@ for episode in range(total_episodes):
     
     # Reduce epsilon (because we need less and less exploration)
     epsilon = min_epsilon + (max_epsilon - min_epsilon)*np.exp(-decay_rate*episode) 
+    
+env.reset()
+rewards = []
+
+for episode in range(total_test_episodes):
+    state = env.reset()
+    step = 0
+    done = False
+    total_rewards = 0
+    #print("****************************************************")
+    #print("EPISODE ", episode)
+
+    for step in range(max_steps):
+        # UNCOMMENT IT IF YOU WANT TO SEE OUR AGENT PLAYING
+        # env.render()
+        # Take the action (index) that have the maximum expected future reward given that state
+        action = np.argmax(qtable[state,:])
+        
+        new_state, reward, done, info = env.step(action)
+        
+        total_rewards += reward
+        
+        if done:
+            rewards.append(total_rewards)
+            #print ("Score", total_rewards)
+            break
+        state = new_state
+env.close()
+print ("Score over time: " +  str(sum(rewards)/total_test_episodes))
