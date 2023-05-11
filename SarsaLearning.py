@@ -4,12 +4,12 @@ import random
 import copy
 
 def Select_action(env_train, qtable, epsilon, state):
-    if random.uniform(0, 1) < epsilon:
-        # explore
-        action = env_train.action_space.sample()
-    else:
-        # exploit
-        action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
+    # if random.uniform(0, 1) < epsilon:
+    #     # explore
+    #     action = env_train.action_space.sample()
+    # else:
+    #     # exploit
+    action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
 
     return action
 
@@ -44,23 +44,15 @@ def main():
         for s in range(max_steps):  
             # exploration-exploitation tradeoff
             action = Select_action(env_train, qtable, epsilon, state)
-            # if random.uniform(0, 1) < epsilon:
-            #     # explore
-            #     action = env_train.action_space.sample()
-            # else:
-            #     # exploit
-            #     action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
-
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
-                
-            # Q-learning algorithm 
-            qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * np.max(qtable[new_state,:])-qtable[state,action])
-                      
+            next_action = Select_action(env_train, qtable, epsilon, new_state)
+            # Sarsa 
+            qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * qtable[new_state,next_action] -qtable[state,action])
             
             # Update to our new state
             state = new_state
-
+            action = next_action
             # if done, finish episode
             if done==True:
                 break
