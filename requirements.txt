@@ -1,4 +1,4 @@
 gym==0.26.1
 gym[toy_text]==0.26.1
-numpy
+numpy==1.21.0
 pygame
