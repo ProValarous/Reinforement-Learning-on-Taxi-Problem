@@ -71,7 +71,7 @@ def main():
         episode+=1
 
     print(f"Training completed over {episode} episodes")
-    input("Press Enter to watch trained agent...")
+    # input("Press Enter to watch trained agent...")
 
     env_train.close()
 
@@ -79,27 +79,38 @@ def main():
 
     env_test = gym.make("Taxi-v3",render_mode='human')
     
-    for i in range(10):
+    score_lst = []
+    steps_lst = []
+    max_demo = 10000
+    for i in range(max_demo):
         state, _ = env_test.reset()
         done = False
         rewards = 0
-        print("Demo # ",i+1)
+        # print("Demo # ",i+1)
         for s in range(max_steps):
-            print(f"TRAINED AGENT")
-            print("Step {}".format(s + 1))
+            # print(f"TRAINED AGENT")
+            # print("Step {}".format(s + 1))
 
             action = np.argmax(qtable[state, :])
             new_state, reward, done, info, _ = env_test.step(action)
             rewards += reward
             
             env_test.render()
-            print(f"score: {rewards}")
+            # print(f"score: {rewards}")
             state = new_state
 
             if done == True:
                 break
-        print("#################")   
-        
+        # print("Total steps taken : ", s)  
+        # print(f"Total score: {rewards}") 
+        # print("#################")   
+        score_lst.append(rewards)
+        steps_lst.append(s)
+    print(f"Average Score across {max_demo} demos: {np.mean(score_lst)}") 
+    print(f"Average steps across {max_demo} demos: {np.mean(steps_lst)}")    
+    print(f"Score variance across {max_demo} demos: {np.std(score_lst)}") 
+    print(f"steps variance across {max_demo} demos: {np.std(steps_lst)}") 
+    input
     env_test.close()
 
 if __name__ == "__main__":
