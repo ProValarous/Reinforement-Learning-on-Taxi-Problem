@@ -43,8 +43,6 @@ def main():
 
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
-            
-
                 
             # Q-learning algorithm
             qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * np.max(qtable[new_state,:])-qtable[state,action])
