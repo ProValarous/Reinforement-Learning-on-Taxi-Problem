@@ -78,11 +78,12 @@ def main():
         episode+=1
 
     print(f"Training completed over {episode} episodes")
-    # input("Press Enter to watch trained agent...")
 
     env_train.close()
 
     ###################################################
+
+    # input("Press Enter to watch trained agent...")
 
     env_test = gym.make("Taxi-v3",render_mode='human')
     
