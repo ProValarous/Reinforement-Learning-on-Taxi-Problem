@@ -45,17 +45,35 @@ class AnalysisPlot():
         plt.legend()
         plt.show()
 
-    def SarsaLearning_Reward_Ep(self,epsilon,learning_rate,discount_rate,decay_rate,no_of_demo=10):
+    def SarsaLearning_Reward_Ep(self,learning_rate,discount_rate,no_of_demo=10):
         no_of_episodes = [x for x in range(10,5000,100)]
-        rewards = []
-        for ep in no_of_episodes:
-            rewards.append(SarsaLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
-            
-        plt.title("SARSA-Learning Analysis Plot")
+        experiments = []
+        for i in [0.1,0.5,0.9]:
+            rewards = []
+            for ep in no_of_episodes:
+                rewards.append(SarsaLearning(i,discount_rate,ep,no_of_demo)[0])
+            experiments.append(copy.deepcopy(rewards)) 
+
+        plt.title("SARSA-Learning Analysis Plot")   
         plt.ylabel("Average Reward")
         plt.xlabel("Number of Training Episodes")
-        plt.plot(no_of_episodes,rewards)
+        
+        plt.plot(no_of_episodes,experiments[0],label = "learning rate = 0.1")
+        plt.plot(no_of_episodes,experiments[1],label = "learning rate = 0.5")
+        plt.plot(no_of_episodes,experiments[2],label = "learning rate = 0.9")
+        plt.legend()
         plt.show()
+
+
+        # rewards = []
+        # for ep in no_of_episodes:
+        #     rewards.append(SarsaLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
+            
+        # plt.title("SARSA-Learning Analysis Plot")
+        # plt.ylabel("Average Reward")
+        # plt.xlabel("Number of Training Episodes")
+        # plt.plot(no_of_episodes,rewards)
+        # plt.show()
 
     def Compartive_analysis_reward(self,epsilon,learning_rate,discount_rate,decay_rate,no_of_demo=10):
         no_of_episodes = [x for x in range(10,5000,100)]
@@ -76,7 +94,8 @@ class AnalysisPlot():
         
 #####################
 RLproject = AnalysisPlot()
-RLproject.QL_Reward_Ep(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)
+# RLproject.QL_Reward_Ep(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)
+RLproject.SarsaLearning_Reward_Ep(learning_rate=0.8,discount_rate=0.9)
 # RLproject.Compartive_analysis_reward(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)    
         
 

@@ -8,7 +8,7 @@ def Select_action(env_train, qtable, epsilon, state):
 
     return action
 
-def SarsaLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
+def SarsaLearning_train(learning_rate,discount_rate,ep):
     # create Taxi environment
     env_train = gym.make("Taxi-v3")
 
@@ -32,11 +32,11 @@ def SarsaLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
         q = copy.deepcopy(qtable)
         for s in range(max_steps):  
             # exploration-exploitation tradeoff
-            action = Select_action(env_train, qtable, epsilon, state)
+            action = np.argmax(qtable[state, :]) # greedy policy!
             # action = env_train.action_space.sample()
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
-            next_action = Select_action(env_train, qtable, epsilon, new_state)
+            next_action = np.argmax(qtable[new_state, :]) # greedy policy!
             # Sarsa 
             qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * qtable[new_state,next_action] -qtable[state,action])
             # Update to our new state
@@ -55,7 +55,7 @@ def SarsaLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
         #     break
         
         # Decrease epsilon
-        epsilon = np.exp(-decay_rate * episode)
+        # epsilon = np.exp(-decay_rate * episode)
         episode+=1
     
     env_train.close()
@@ -100,8 +100,8 @@ def SarsaLearning_test(qtable,no_of_demo):
     env_test.close()
     return score_lst, steps_lst
 
-def SarsaLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo):
-    Q_table = SarsaLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep)
+def SarsaLearning(learning_rate,discount_rate,ep,no_of_demo):
+    Q_table = SarsaLearning_train(learning_rate,discount_rate,ep)
     rewards, steps = SarsaLearning_test(Q_table,no_of_demo)
     avg_reward = np.mean(rewards) 
     avg_steps = np.mean(steps)
