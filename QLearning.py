@@ -3,6 +3,15 @@ import gym
 import random
 import copy
 
+def Select_action(env_train, qtable, epsilon, state):
+    if random.uniform(0, 1) < epsilon:
+        # explore
+        action = env_train.action_space.sample()
+    else:
+        # exploit
+        action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
+
+    return action
 
 def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
     # create Taxi environment
@@ -125,9 +134,8 @@ def main():
     env_train = gym.make("Taxi-v3")
 
     # initialize q-table
-    state_size = env_train.observation_space.n  # 500 state
-    action_size = env_train.action_space.n      # 6 actions
-    
+    state_size = env_train.observation_space.n
+    action_size = env_train.action_space.n
     qtable = np.zeros((state_size, action_size))
     
     # hyperparameters
@@ -151,21 +159,19 @@ def main():
         q = copy.deepcopy(qtable)
         for s in range(max_steps):  
             # exploration-exploitation tradeoff
-            if random.uniform(0, 1) < epsilon:
-                # explore
-                action = env_train.action_space.sample()
-            else:
-                # exploit
-                action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
+            action = Select_action(env_train, qtable, epsilon, state)
+            # if random.uniform(0, 1) < epsilon:
+            #     # explore
+            #     action = env_train.action_space.sample()
+            # else:
+            #     # exploit
+            #     action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
 
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
-            
-
                 
-            # Q-learning algorithm
+            # Q-learning algorithm 
             qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * np.max(qtable[new_state,:])-qtable[state,action])
-            
                       
             
             # Update to our new state
