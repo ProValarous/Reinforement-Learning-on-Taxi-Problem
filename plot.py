@@ -12,36 +12,52 @@ from SarsaLearning import SarsaLearning
 
 class AnalysisPlot():
     def __init__(self) -> None:
-        self.epsilon_large = '-r'
-        self.epsilon_mid = '^r'
-        self.epsilon_small = '*r'
-        self.epsilon_decay = '--r'
-        
-        self.learning_rate = '-b'
-        self.learning_rate = '^b'
-        self.learning_rate = '*b'
-        
-        self.discount_rate = '-g'
-        self.discount_rate = '^g'
-        self.discount_rate = '*g'
+        self.epsilon = [0.1,0.5,0.9]
+        self.learning_rate = [0.1,0.5,0.9]
+        self.discount_rate = [0.1,0.5,0.9]
+       
         
         # decay, we'll see
         
-    def QL_Reward_Ep(self,epsilon,learning_rate,discount_rate,decay_rate,no_of_demo=10):
-        no_of_episodes = [x for x in range(10,5000,100)]
+    def QL_Reward_Ep(self,epsilon = 0.5,learning_rate = 0.9 ,discount_rate = 0.8,decay_rate=0,no_of_demo=10):
+        no_of_episodes = [x for x in range(10,1000,100)]
         experiments = []
-        for i in [0.1,0.5,0.9]:
+        
+        for i in self.epsilon:
             rewards = []
             for ep in no_of_episodes:
                 rewards.append(QLearning(i,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
-            experiments.append(copy.deepcopy(rewards))    
+            experiments.append(copy.deepcopy(rewards)) 
+        
+        for i in self.learning_rate:
+            rewards = []
+            for ep in no_of_episodes:
+                rewards.append(QLearning(epsilon,i,discount_rate,decay_rate,ep,no_of_demo)[0])
+            experiments.append(copy.deepcopy(rewards))  
+            
+        for i in self.discount_rate:
+            rewards = []
+            for ep in no_of_episodes:
+                rewards.append(QLearning(epsilon,learning_rate,i,decay_rate,ep,no_of_demo)[0])
+            experiments.append(copy.deepcopy(rewards))        
+        
+        
         plt.title("Q-Learning Analysis Plot")   
         plt.ylabel("Average Reward")
         plt.xlabel("Number of Training Episodes")
         
-        plt.plot(no_of_episodes,experiments[0],label = "$\epsilon = 0.1 $")
-        plt.plot(no_of_episodes,experiments[1],label = "$\epsilon = 0.2 $")
-        plt.plot(no_of_episodes,experiments[2],label = "$\epsilon = 0.3 $")
+        plt.plot(no_of_episodes,experiments[0],label = "$\epsilon = 0.1 $",linestyle = "--",color='red')
+        plt.plot(no_of_episodes,experiments[1],label = "$\epsilon = 0.5 $",linestyle = "-.",color='red')
+        plt.plot(no_of_episodes,experiments[2],label = "$\epsilon = 0.9 $",linestyle = "dotted",color='red')
+        
+        plt.plot(no_of_episodes,experiments[3],label = "$\\alpha = 0.1 $",linestyle = "--",color='green')
+        plt.plot(no_of_episodes,experiments[4],label = "$\\alpha = 0.5 $",linestyle = "-.",color='green')
+        plt.plot(no_of_episodes,experiments[5],label = "$\\alpha = 0.9 $",linestyle = "dotted",color='green')
+        
+        plt.plot(no_of_episodes,experiments[6],label = "$\gamma = 0.1 $",linestyle = "--",color='blue')
+        plt.plot(no_of_episodes,experiments[7],label = "$\gamma = 0.5 $",linestyle = "-.",color='blue')
+        plt.plot(no_of_episodes,experiments[8],label = "$\gamma = 0.9 $",linestyle = "dotted",color='blue')
+        
         plt.legend()
         plt.show()
 
@@ -76,7 +92,7 @@ class AnalysisPlot():
         # plt.show()
 
     def Compartive_analysis_reward(self,epsilon,learning_rate,discount_rate,decay_rate,no_of_demo=10):
-        no_of_episodes = [x for x in range(10,5000,100)]
+        no_of_episodes = [x for x in range(10,500,100)]
         rewards_SL = []
         rewards_QL = []
         for ep in no_of_episodes:
@@ -94,8 +110,7 @@ class AnalysisPlot():
         
 #####################
 RLproject = AnalysisPlot()
-# RLproject.QL_Reward_Ep(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)
-RLproject.SarsaLearning_Reward_Ep(learning_rate=0.8,discount_rate=0.9)
+RLproject.QL_Reward_Ep()
 # RLproject.Compartive_analysis_reward(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)    
         
 
