@@ -74,7 +74,7 @@ def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
         #     break
         
         # Decrease epsilon
-        epsilon = np.exp(-decay_rate * episode)
+        # epsilon = np.exp(-decay_rate * episode)
         episode+=1
     
     env_train.close()
