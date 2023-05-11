@@ -3,7 +3,8 @@ import gym
 import random
 import copy
 
-def Select_action(env_train, qtable, epsilon, state):
+'''
+def Select_action_epsilon_greedy(env_train, qtable, epsilon, state):
     if random.uniform(0, 1) < epsilon:
         # explore
         action = env_train.action_space.sample()
@@ -12,6 +13,7 @@ def Select_action(env_train, qtable, epsilon, state):
         action = np.argmax(qtable[state, :]) # <- wrong : this cannot be same as greedy policy!
 
     return action
+'''
 
 def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
     # create Taxi environment
@@ -34,14 +36,14 @@ def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
     convergence_threshold_count = 0
     
     # training
-    while(True):
+    for i in range(num_episodes):
         # reset the environment
         state, _ = env_train.reset()
         done = False
         q = copy.deepcopy(qtable)
         for s in range(max_steps):  
             # exploration-exploitation tradeoff
-            if random.uniform(0, 1) < epsilon:
+            if random.uniform(0, 1) < epsilon:                      # Epsilon Greedy
                 # explore
                 action = env_train.action_space.sample()
             else:
@@ -63,13 +65,13 @@ def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
             if done==True:
                 break
         
-        if np.array_equal(qtable,q):
-            convergence_threshold_count+=1  
-        else:
-            convergence_threshold_count = 0        
+        # if np.array_equal(qtable,q):
+        #     convergence_threshold_count+=1  
+        # else:
+        #     convergence_threshold_count = 0        
         
-        if convergence_threshold_count > 4:
-            break
+        # if convergence_threshold_count > 4:
+        #     break
         
         # Decrease epsilon
         epsilon = np.exp(-decay_rate * episode)
@@ -128,7 +130,7 @@ def QLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo):
     
     return avg_reward,std_reward,avg_steps,std_steps
 
-
+'''
 def main():
     # create Taxi environment
     env_train = gym.make("Taxi-v3")
@@ -239,3 +241,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
