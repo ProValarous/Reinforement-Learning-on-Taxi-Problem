@@ -3,10 +3,8 @@ import gym
 import random
 import copy
 
-# def Select_action(env_train, qtable, epsilon, state):
-#     action = np.argmax(qtable[state, :]) # greedy policy!
-
-#     return action
+# If want to see demo of taxi, Put RENDER = 1
+RENDER = 1   
 
 def SarsaLearning_train(learning_rate,discount_rate,ep):
     # create Taxi environment
@@ -22,7 +20,6 @@ def SarsaLearning_train(learning_rate,discount_rate,ep):
     max_steps = 99  # per episode
     episode = 1
     
-    # convergence_threshold_count = 0
     
     # training
     for i in range(num_episodes):
@@ -31,9 +28,8 @@ def SarsaLearning_train(learning_rate,discount_rate,ep):
         done = False
         q = copy.deepcopy(qtable)
         for s in range(max_steps):  
-            # exploration-exploitation tradeoff
+
             action = np.argmax(qtable[state, :])                # greedy policy!
-            # action = env_train.action_space.sample()
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
             next_action = np.argmax(qtable[new_state, :])       # greedy policy!
@@ -45,17 +41,7 @@ def SarsaLearning_train(learning_rate,discount_rate,ep):
             # if done, finish episode
             if done==True:
                 break
-        
-        # if np.array_equal(qtable,q):
-        #     convergence_threshold_count+=1  
-        # else:
-        #     convergence_threshold_count=0        
-        
-        # if convergence_threshold_count > 3:
-        #     break
-        
-        # Decrease epsilon
-        # epsilon = np.exp(-decay_rate * episode)
+
         episode+=1
     
     env_train.close()
@@ -64,8 +50,11 @@ def SarsaLearning_train(learning_rate,discount_rate,ep):
     return qtable
 
 def SarsaLearning_test(qtable,no_of_demo):
-    # env_test = gym.make("Taxi-v3",render_mode='ansi')
-    env_test = gym.make("Taxi-v3")
+
+    if RENDER == 1:
+        env_test = gym.make("Taxi-v3",render_mode='human')
+    else: 
+        env_test = gym.make("Taxi-v3")
 
     max_steps = 99
 
@@ -76,7 +65,7 @@ def SarsaLearning_test(qtable,no_of_demo):
         state, _ = env_test.reset()
         done = False
         rewards = 0
-        # print("Demo # ",i+1)
+
         for s in range(max_steps):
             # print(f"TRAINED AGENT")
             # print("Step {}".format(s + 1))
@@ -84,8 +73,8 @@ def SarsaLearning_test(qtable,no_of_demo):
             action = np.argmax(qtable[state, :])
             new_state, reward, done, info, _ = env_test.step(action)
             rewards += reward
-            
-            # env_test.render()
+            if RENDER == 1:
+                env_test.render()
             # print(f"score: {rewards}")
             state = new_state
 
@@ -93,10 +82,11 @@ def SarsaLearning_test(qtable,no_of_demo):
                 break
         # print("Total steps taken : ", s)  
         # print(f"Total score: {rewards}") 
-        # print("#################")   
+
         score_lst.append(rewards)
         steps_lst.append(s)
-
+    if RENDER == 1:
+        input("Press Enter")
     env_test.close()
     return score_lst, steps_lst
 
@@ -110,3 +100,5 @@ def SarsaLearning(learning_rate,discount_rate,ep,no_of_demo):
     
     return avg_reward,std_reward,avg_steps,std_steps
 
+if __name__ == "__main__":
+    SarsaLearning(learning_rate=0.9,discount_rate=0.9,ep=1000,no_of_demo=10)
