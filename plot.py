@@ -7,6 +7,7 @@
 
 import matplotlib.pyplot as plt
 import copy 
+import time
 from QLearning import QLearning
 from SarsaLearning import SarsaLearning
 
@@ -96,18 +97,28 @@ class AnalysisPlot():
         # plt.plot(no_of_episodes,rewards)
         # plt.show()
 
-    def Compartive_analysis_reward(self,epsilon,learning_rate,discount_rate,decay_rate,no_of_demo=10):
-        no_of_episodes = [x for x in range(10,500,100)]
-        rewards_SL = []
-        rewards_QL = []
+    def Compartive_analysis_reward(self,epsilon=0.5,learning_rate=0.9,discount_rate=0.9,no_of_demo=10):
+        no_of_episodes = [x for x in range(10,5000,100)]
+        time_SL = []
+        time_QL = []
         for ep in no_of_episodes:
-            rewards_QL.append(QLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
-            rewards_SL.append(SarsaLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
+            start_time = time.time()
+            # rewards_QL.append(QLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
+            QLearning(epsilon,learning_rate,discount_rate,ep,no_of_demo)
+            end_time = time.time()
+            time_QL.append(end_time-start_time)
+
+            start_time = time.time()
+            # rewards_SL.append(SarsaLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo)[0])
+            SarsaLearning(learning_rate,discount_rate,ep,no_of_demo)
+            end_time = time.time()
+            time_SL.append(end_time-start_time)
+
         plt.title("Comparative Analysis Plot")
         plt.ylabel("Average Reward")
         plt.xlabel("Number of Training Episodes")
-        plt.plot(no_of_episodes,rewards_QL, label = "Q-learning", linestyle = "-")
-        plt.plot(no_of_episodes,rewards_SL, label = "SARSA-learning", linestyle = "--")
+        plt.plot(no_of_episodes,time_QL, label = "Q-learning", linestyle = "-")
+        plt.plot(no_of_episodes,time_SL, label = "SARSA-learning", linestyle = "--")
         plt.legend()
         plt.show()
         
@@ -115,8 +126,9 @@ class AnalysisPlot():
         
 #####################
 RLproject = AnalysisPlot()
-RLproject.QL_Reward_Ep()
+# RLproject.QL_Reward_Ep()
 # RLproject.SarsaLearning_Reward_Ep()
 # RLproject.Compartive_analysis_reward(epsilon=0.5,learning_rate=0.8,discount_rate=0.9,decay_rate=0)    
+RLproject.Compartive_analysis_reward()
         
 

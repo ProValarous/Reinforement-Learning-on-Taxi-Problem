@@ -15,7 +15,7 @@ def Select_action_epsilon_greedy(env_train, qtable, epsilon, state):
     return action
 '''
 
-def QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep):
+def QLearning_train(epsilon,learning_rate,discount_rate,ep):
     # create Taxi environment
     env_train = gym.make("Taxi-v3")
 
@@ -120,8 +120,8 @@ def QLearning_test(qtable,no_of_demo):
     
     return score_lst, steps_lst
 
-def QLearning(epsilon,learning_rate,discount_rate,decay_rate,ep,no_of_demo):
-    Q_table = QLearning_train(epsilon,learning_rate,discount_rate,decay_rate,ep)
+def QLearning(epsilon,learning_rate,discount_rate,ep,no_of_demo):
+    Q_table = QLearning_train(epsilon,learning_rate,discount_rate,ep)
     rewards, steps = QLearning_test(Q_table,no_of_demo)
     avg_reward = np.mean(rewards) 
     avg_steps = np.mean(steps)

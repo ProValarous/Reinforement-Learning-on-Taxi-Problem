@@ -3,10 +3,10 @@ import gym
 import random
 import copy
 
-def Select_action(env_train, qtable, epsilon, state):
-    action = np.argmax(qtable[state, :]) # greedy policy!
+# def Select_action(env_train, qtable, epsilon, state):
+#     action = np.argmax(qtable[state, :]) # greedy policy!
 
-    return action
+#     return action
 
 def SarsaLearning_train(learning_rate,discount_rate,ep):
     # create Taxi environment
@@ -32,11 +32,11 @@ def SarsaLearning_train(learning_rate,discount_rate,ep):
         q = copy.deepcopy(qtable)
         for s in range(max_steps):  
             # exploration-exploitation tradeoff
-            action = np.argmax(qtable[state, :]) # greedy policy!
+            action = np.argmax(qtable[state, :])                # greedy policy!
             # action = env_train.action_space.sample()
             # take action and observe reward
             new_state, reward, done, info, _ = env_train.step(action)
-            next_action = np.argmax(qtable[new_state, :]) # greedy policy!
+            next_action = np.argmax(qtable[new_state, :])       # greedy policy!
             # Sarsa 
             qtable[state,action] = qtable[state,action] + learning_rate * (reward + discount_rate * qtable[new_state,next_action] -qtable[state,action])
             # Update to our new state
