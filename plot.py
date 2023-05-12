@@ -45,7 +45,7 @@ class AnalysisPlot():
         plt.legend()
         plt.show()
 
-    def SarsaLearning_Reward_Ep(self,learning_rate,discount_rate,no_of_demo=10):
+    def SarsaLearning_Reward_Ep(self,learning_rate,discount_rate,no_of_demo=50):
         no_of_episodes = [x for x in range(10,5000,100)]
         experiments = []
         for i in [0.1,0.5,0.9]:
@@ -58,9 +58,9 @@ class AnalysisPlot():
         plt.ylabel("Average Reward")
         plt.xlabel("Number of Training Episodes")
         
-        plt.plot(no_of_episodes,experiments[0],label = "learning rate = 0.1")
-        plt.plot(no_of_episodes,experiments[1],label = "learning rate = 0.5")
-        plt.plot(no_of_episodes,experiments[2],label = "learning rate = 0.9")
+        plt.plot(no_of_episodes,experiments[0],label = "$\\alpha = 0.1, \gamma = 0.9$")
+        plt.plot(no_of_episodes,experiments[1],label = "$\\alpha = 0.5, \gamma = 0.9$")
+        plt.plot(no_of_episodes,experiments[2],label = "$\\alpha = 0.9, \gamma = 0.9$")
         plt.legend()
         plt.show()
 
