@@ -53,7 +53,7 @@ The observation space consists of 500 discrete states. Each state is represented
 <p> To run the project, use the following steps: <p/>
 1. Clone the project repository.
 2. Install the necessary packages by running pip install -r requirements.txt.
-3. Run the files `QLearning.py` and `SarsaLearning.py` to see the rendering of episodes over the implemented algorithm
+3. Run the files - `QLearning.py` and - `SarsaLearning.py` to see the rendering of episodes over the implemented algorithm
 
 ## License
 This project is licensed under the MIT License. 
