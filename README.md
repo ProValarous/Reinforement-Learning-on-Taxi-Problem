@@ -13,12 +13,9 @@
   The action space consists of 6 discrete deterministic actions:
   </p>
 
-Actions
-The action space consists of 6 discrete deterministic actions:
-
-0: Move south
-1: Move north
-2: Move east
-3: Move west
-4: Pickup passenger
+0: Move south <br />
+1: Move north <br />
+2: Move east  <br />
+3: Move west <br />
+4: Pickup passenger <br />
 5: Drop off passenger
