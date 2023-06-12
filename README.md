@@ -43,3 +43,20 @@ The observation space consists of 500 discrete states. Each state is represented
 
 2. **Maximizing Reward:** The learned policies from both SARSA and Q-learning were executed from various starting states, and the average reward was calculated for each algorithm. The average reward represents the effectiveness of the learned policy in maximizing the cumulative reward over multiple episodes. The algorithm with a higher average reward was considered better at maximizing rewards.
 <p>The results of the comparative analysis can be found in the attached report. The analysis includes graphs, tables, and discussions highlighting the performance of SARSA and Q-learning in terms of computational efficiency and reward maximization. <p/>
+
+## Prerequisites
+<li> Python > 3.8.0 (code has been tested with this version) <li/>
+<li>  OpenAI Gym <li/>
+<li> NumPy <li/>
+
+## To Run:
+<p> To run the project, use the following steps: <p/>
+1. Clone the project repository.
+2. Install the necessary packages by running pip install -r requirements.txt.
+3. Run the files `QLearning.py` and `SarsaLearning.py` to see the rendering of episodes over the implemented algorithm
+
+## License
+This project is licensed under the MIT License. 
+
+## Acknowledgments
+The Taxi problem environment is part of the Toy Text environments provided by OpenAI Gym. For more information about the environment and its history, refer to the OpenAI Gym documentation.
