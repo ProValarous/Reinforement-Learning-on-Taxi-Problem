@@ -46,8 +46,8 @@ The observation space consists of 500 discrete states. Each state is represented
 
 ## Prerequisites
 <ul>
-<li> Python `>= 3.8.0` (code has been tested with this version) </li>
-<li>  refer to `requirments.txt` </li>
+<li> Python - `>= 3.8.0` (code has been tested with this version) </li>
+<li>  refer to - `requirments.txt` </li>
 </ul>
 ## To Run:
 <p> To run the project, use the following steps: <p/>
