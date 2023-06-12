@@ -44,17 +44,16 @@ The observation space consists of 500 discrete states. Each state is represented
 2. **Maximizing Reward:** The learned policies from both SARSA and Q-learning were executed from various starting states, and the average reward was calculated for each algorithm. The average reward represents the effectiveness of the learned policy in maximizing the cumulative reward over multiple episodes. The algorithm with a higher average reward was considered better at maximizing rewards.
 <p>The results of the comparative analysis can be found in the attached report. The analysis includes graphs, tables, and discussions highlighting the performance of SARSA and Q-learning in terms of computational efficiency and reward maximization. <p/>
 
-## Prerequisites
-<ul>
-<li> Python <code>>= 3.8.0<\code> (code has been tested with this version) </li>
-  <li>Refer to <code>requirments.txt</code> </li>
-</ul>
+## Prerequisites:
+
+1 - `Python >= 3.8.0` (code has been tested with this version)  <br />
+2 -  Refer to `requirments.txt`
 
 ## To Run:
 <p> To run the project, use the following steps: </p>
 <ol>
    <li>Clone the project repository. </li> 
-   <li>Install the necessary packages by running `pip install -r requirements.txt`. </li>
+   <li>Install the necessary packages by running ```pip install -r requirements.txt```. </li>
   <li>Run the files <code>QLearning.py<\code> and <code>SarsaLearning.py</code> to see the rendering of episodes over the implemented algorithm </li> 
   </ol>
 
