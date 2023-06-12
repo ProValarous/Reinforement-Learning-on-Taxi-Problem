@@ -32,9 +32,9 @@ The observation space consists of 500 discrete states. Each state is represented
 <p> The project implements SARSA and Q-learning algorithms to train optimal policies for the Taxi problem. SARSA is an on-policy algorithm that updates the Q-values based on the current policy, while Q-learning is an off-policy algorithm that updates the Q-values using the maximum Q-value of the next state. By comparing the two algorithms, we analyze their computational efficiency in terms of convergence time and their ability to maximize the cumulative reward. <p/>
 
 ## Project Structure:
-<li> `QLearning.py`: Implements the Q-learning algorithm for training the optimal policy. </li>
-<li> `SarsaLearning.py`: Implements the SARSA algorithm for training the optimal policy. </li>
-<li> `plot.py`: contains code to generate plots for the comparative analysis of the Q-learning and SARSA learning algorithms, providing insights into their performance on the Taxi problem. </li>
+- `QLearning.py`: Implements the Q-learning algorithm for training the optimal policy.
+- `SarsaLearning.py`: Implements the SARSA algorithm for training the optimal policy. 
+- `plot.py`: contains code to generate plots for the comparative analysis of the Q-learning and SARSA learning algorithms, providing insights into their performance on the Taxi problem. 
 
 ## Comparative Analysis: 
 <p> A comparative analysis of the SARSA and Q-learning algorithms was conducted to evaluate their performance on the Taxi problem. The analysis focused on two main aspects: </p>
