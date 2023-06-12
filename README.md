@@ -46,15 +46,16 @@ The observation space consists of 500 discrete states. Each state is represented
 
 ## Prerequisites
 <ul>
-<li> Python > 3.8.0 (code has been tested with this version) <li/>
-<li>  OpenAI Gym <li/>
-<li> NumPy <li/>
+<li> Python `>= 3.8.0` (code has been tested with this version) </li>
+<li>  refer to `requirments.txt` </li>
 </ul>
 ## To Run:
 <p> To run the project, use the following steps: <p/>
-1. Clone the project repository. <br /> 
-- 2. Install the necessary packages by running `pip install -r requirements.txt`. <br />
-- 3. Run the files `QLearning.py` and `SarsaLearning.py` to see the rendering of episodes over the implemented algorithm <br /> 
+<ol>
+   <li>Clone the project repository. </li> 
+   <li>Install the necessary packages by running `pip install -r requirements.txt`. </li>
+   <li>Run the files `QLearning.py` and `SarsaLearning.py` to see the rendering of episodes over the implemented algorithm </li> 
+  </ol>
 
 ## License
 This project is licensed under the MIT License. 
