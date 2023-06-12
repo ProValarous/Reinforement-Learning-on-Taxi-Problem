@@ -45,10 +45,11 @@ The observation space consists of 500 discrete states. Each state is represented
 <p>The results of the comparative analysis can be found in the attached report. The analysis includes graphs, tables, and discussions highlighting the performance of SARSA and Q-learning in terms of computational efficiency and reward maximization. <p/>
 
 ## Prerequisites
+<ul>
 <li> Python > 3.8.0 (code has been tested with this version) <li/>
 <li>  OpenAI Gym <li/>
 <li> NumPy <li/>
-
+</ul>
 ## To Run:
 <p> To run the project, use the following steps: <p/>
 1. Clone the project repository. <br /> 
