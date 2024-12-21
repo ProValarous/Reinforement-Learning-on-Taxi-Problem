@@ -8,6 +8,12 @@
   In this environment, there are four designated locations represented by R(ed), G(reen), Y(ellow), and B(lue). At the beginning of each episode, the taxi and the passenger are randomly positioned in the grid world. The taxi's task is to navigate to the passenger's location, pick up the passenger, drive to the passenger's destination, and finally drop off the passenger. The episode ends when the passenger is successfully dropped off.
 </p>
 
+[Presentation slides](https://github.com/mj06879/Reinforement-Learning-on-Taxi-Problem/blob/main/Presentation.pdf)
+<div style="display: flex; justify-content: space-between;">
+  <img src="https://github.com/user-attachments/assets/6a6f1dbe-5085-4d81-88dd-9f579f061b71" width="300" height="200">
+  <img src="https://github.com/user-attachments/assets/db201bd2-b99c-4062-958d-383377c17c51" width="300" height="200">
+</div>
+
 ### Actions:
 <p>
   The action space consists of 6 discrete deterministic actions:
